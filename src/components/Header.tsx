@@ -1,7 +1,13 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Home } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 // Mock data for projects and articles
 const projects = [
@@ -21,115 +27,90 @@ const articles = [
 ];
 
 const Header: React.FC = () => {
-  const [projectsOpen, setProjectsOpen] = useState(false);
-  const [articlesOpen, setArticlesOpen] = useState(false);
-  
-  // Function to handle dropdown toggle
-  const toggleDropdown = (dropdown: 'projects' | 'articles') => {
-    if (dropdown === 'projects') {
-      setProjectsOpen(!projectsOpen);
-      setArticlesOpen(false);
-    } else {
-      setArticlesOpen(!articlesOpen);
-      setProjectsOpen(false);
-    }
-  };
-  
-  // Function to close dropdowns
-  const closeDropdowns = () => {
-    setProjectsOpen(false);
-    setArticlesOpen(false);
-  };
-  
   return (
     <header className="bg-neon-dark border-b border-neon-green/30 sticky top-0 z-50 backdrop-blur-sm">
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between h-16">
-          <Link to="/" className="text-neon-green hover:text-white transition-colors" onClick={closeDropdowns}>
+          <Link to="/" className="text-neon-green hover:text-white transition-colors">
             <Home size={24} />
           </Link>
           
           <div className="flex items-center space-x-10">
-            <div className="relative">
-              <button 
-                className={`text-neon-green hover:text-white transition-colors ${projectsOpen ? 'text-white' : ''}`}
-                onClick={() => toggleDropdown('projects')}
-                onMouseEnter={() => setProjectsOpen(true)}
-                onMouseLeave={() => setProjectsOpen(false)}
-              >
+            <DropdownMenu>
+              <DropdownMenuTrigger className="text-neon-green hover:text-white transition-colors focus:outline-none">
                 Projetos
-              </button>
-              
-              {projectsOpen && (
-                <div 
-                  className="dropdown-menu"
-                  onMouseEnter={() => setProjectsOpen(true)}
-                  onMouseLeave={() => setProjectsOpen(false)}
-                >
-                  {projects.map(project => (
-                    <a 
-                      key={project.id}
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block px-4 py-2 text-sm hover:bg-neon-green/10 text-white hover:text-neon-green transition-colors"
-                    >
-                      {project.title}
-                    </a>
-                  ))}
-                  <Link 
-                    to="/projetos"
-                    className="block px-4 py-2 text-sm font-semibold hover:bg-neon-green/10 text-neon-green transition-colors mt-1 border-t border-neon-green/20"
-                    onClick={closeDropdowns}
-                  >
-                    Ver todos os projetos
-                  </Link>
-                </div>
-              )}
-            </div>
-            
-            <div className="relative">
-              <button 
-                className={`text-neon-green hover:text-white transition-colors ${articlesOpen ? 'text-white' : ''}`}
-                onClick={() => toggleDropdown('articles')}
-                onMouseEnter={() => setArticlesOpen(true)}
-                onMouseLeave={() => setArticlesOpen(false)}
+              </DropdownMenuTrigger>
+              <DropdownMenuContent 
+                align="center"
+                className="bg-neon-dark border border-neon-green rounded-md shadow-lg py-1 w-[250px] max-h-[200px] overflow-y-auto"
+                sideOffset={5}
               >
-                Artigos
-              </button>
-              
-              {articlesOpen && (
-                <div 
-                  className="dropdown-menu"
-                  onMouseEnter={() => setArticlesOpen(true)}
-                  onMouseLeave={() => setArticlesOpen(false)}
-                >
-                  {articles.map(article => (
-                    <Link 
-                      key={article.id}
-                      to={`/artigos/${article.slug}`}
-                      className="block px-4 py-2 text-sm hover:bg-neon-green/10 text-white hover:text-neon-green transition-colors"
-                      onClick={closeDropdowns}
-                    >
-                      {article.title}
-                    </Link>
+                <div className="custom-scrollbar">
+                  {projects.map(project => (
+                    <DropdownMenuItem key={project.id} className="px-0 py-0 focus:bg-transparent">
+                      <a 
+                        href={project.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block w-full px-4 py-2 text-sm hover:bg-neon-green/10 text-white hover:text-neon-green transition-colors"
+                      >
+                        {project.title}
+                      </a>
+                    </DropdownMenuItem>
                   ))}
-                  <Link 
-                    to="/artigos"
-                    className="block px-4 py-2 text-sm font-semibold hover:bg-neon-green/10 text-neon-green transition-colors mt-1 border-t border-neon-green/20"
-                    onClick={closeDropdowns}
-                  >
-                    Ver todos os artigos
-                  </Link>
+                  <div className="border-t border-neon-green/20 mt-1">
+                    <DropdownMenuItem className="px-0 py-0 focus:bg-transparent">
+                      <Link 
+                        to="/projetos"
+                        className="block w-full px-4 py-2 text-sm font-semibold hover:bg-neon-green/10 text-neon-green transition-colors"
+                      >
+                        Ver todos os projetos
+                      </Link>
+                    </DropdownMenuItem>
+                  </div>
                 </div>
-              )}
-            </div>
+              </DropdownMenuContent>
+            </DropdownMenu>
             
-            <Link to="/curriculo" className="text-neon-green hover:text-white transition-colors" onClick={closeDropdowns}>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="text-neon-green hover:text-white transition-colors focus:outline-none">
+                Artigos
+              </DropdownMenuTrigger>
+              <DropdownMenuContent 
+                align="center"
+                className="bg-neon-dark border border-neon-green rounded-md shadow-lg py-1 w-[250px] max-h-[200px] overflow-y-auto"
+                sideOffset={5}
+              >
+                <div className="custom-scrollbar">
+                  {articles.map(article => (
+                    <DropdownMenuItem key={article.id} className="px-0 py-0 focus:bg-transparent">
+                      <Link 
+                        to={`/artigos/${article.slug}`}
+                        className="block w-full px-4 py-2 text-sm hover:bg-neon-green/10 text-white hover:text-neon-green transition-colors"
+                      >
+                        {article.title}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                  <div className="border-t border-neon-green/20 mt-1">
+                    <DropdownMenuItem className="px-0 py-0 focus:bg-transparent">
+                      <Link 
+                        to="/artigos"
+                        className="block w-full px-4 py-2 text-sm font-semibold hover:bg-neon-green/10 text-neon-green transition-colors"
+                      >
+                        Ver todos os artigos
+                      </Link>
+                    </DropdownMenuItem>
+                  </div>
+                </div>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            
+            <Link to="/curriculo" className="text-neon-green hover:text-white transition-colors">
               Currículo
             </Link>
             
-            <Link to="/sobre" className="text-neon-green hover:text-white transition-colors" onClick={closeDropdowns}>
+            <Link to="/sobre" className="text-neon-green hover:text-white transition-colors">
               Sobre mim
             </Link>
           </div>

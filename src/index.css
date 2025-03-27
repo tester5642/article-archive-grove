@@ -81,20 +81,25 @@
     transform-origin: top center;
   }
   
-  /* Estilização da barra de rolagem */
-  .dropdown-menu::-webkit-scrollbar {
+  /* Custom scrollbar styling */
+  .custom-scrollbar::-webkit-scrollbar {
     width: 5px;
   }
   
-  .dropdown-menu::-webkit-scrollbar-track {
+  .custom-scrollbar::-webkit-scrollbar-track {
     @apply bg-neon-dark;
   }
   
-  .dropdown-menu::-webkit-scrollbar-thumb {
+  .custom-scrollbar::-webkit-scrollbar-thumb {
     @apply bg-neon-green/50 rounded-full;
   }
   
-  .dropdown-menu::-webkit-scrollbar-thumb:hover {
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     @apply bg-neon-green;
+  }
+  
+  /* Apply custom scrollbar styling to dropdown content */
+  .dropdown-menu-content {
+    @apply custom-scrollbar;
   }
 }
