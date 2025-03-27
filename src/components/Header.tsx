@@ -55,7 +55,7 @@ const Header: React.FC = () => {
                 className={`text-neon-green hover:text-white transition-colors ${projectsOpen ? 'text-white' : ''}`}
                 onClick={() => toggleDropdown('projects')}
                 onMouseEnter={() => setProjectsOpen(true)}
-                onMouseLeave={() => setTimeout(() => setProjectsOpen(false), 300)}
+                onMouseLeave={() => setProjectsOpen(false)}
               >
                 Projetos
               </button>
@@ -93,7 +93,7 @@ const Header: React.FC = () => {
                 className={`text-neon-green hover:text-white transition-colors ${articlesOpen ? 'text-white' : ''}`}
                 onClick={() => toggleDropdown('articles')}
                 onMouseEnter={() => setArticlesOpen(true)}
-                onMouseLeave={() => setTimeout(() => setArticlesOpen(false), 300)}
+                onMouseLeave={() => setArticlesOpen(false)}
               >
                 Artigos
               </button>
